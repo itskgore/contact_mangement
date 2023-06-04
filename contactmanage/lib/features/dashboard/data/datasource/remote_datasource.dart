@@ -1,4 +1,5 @@
 import 'package:contactmanage/core/error/failures.dart';
+import 'package:contactmanage/core/utils/network_check.dart';
 import 'package:contactmanage/features/dashboard/domain/model/contact_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,8 @@ class ContactDataSourceImp extends ContactDataSource {
   @override
   Future<List<ContactModel>> getContacts() async {
     try {
+      NetworkUtils()
+          .isConnectedToInternet(); // this can also be implemented in an interceptor
       final response =
           await Dio().get('https://jsonplaceholder.typicode.com/users');
       final result = await hanldeStatusCode(response);
